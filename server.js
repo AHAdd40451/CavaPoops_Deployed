@@ -18,7 +18,11 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 /*****  Middlewares  *****/
-app.use(cors()).use(bodyParser.json({ limit: "50mb" }));
+// app.use(cors()).use(bodyParser.json({ limit: "50mb" }));
+
+app
+  .use(cors({ origin: ["https://cavapoops.vercel.app"] }))
+  .use(bodyParser.json({ limit: "50mb" }));
 
 //routes
 routes(app);
