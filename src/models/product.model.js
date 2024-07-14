@@ -2,18 +2,19 @@ import mongoose from "mongoose";
 
 const productSchema = new mongoose.Schema(
   {
-    title: { type: String },
+    name: { type: String },
     description: { type: String },
     photo: [String],
     price: { type: String },
+    discountedPrice: { type: String },
     unit: {
       type: String,
       default: "$",
     },
-    stock: {
-      type: Number,
-      default: 0,
-    },
+    ageOfPuppies: { type: String },
+    weightLbs: { type: Number },
+    weightOunce: { type: Number },
+    inStock: { type: Number },
     category: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Category",
@@ -21,10 +22,9 @@ const productSchema = new mongoose.Schema(
     },
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   },
-
   {
     timestamps: true,
   }
 );
 
-export const Product = mongoose.model("product", productSchema);
+export const Product = mongoose.model("Product", productSchema);

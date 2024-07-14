@@ -98,7 +98,7 @@ export const signup = async (req, res) => {
       id: result._id,
     });
   } catch (error) {
-    console.error(error);
+    console.log(error);
     return res.status(500).json({
       message: "An error has occurred.",
       error: error.message,
@@ -150,7 +150,7 @@ export const login = async (req, res) => {
 
     return res.status(200).json(response);
   } catch (error) {
-    console.error(error);
+    console.log(error);
     return res.status(500).json({
       message: "Server error",
       error: error.message,
@@ -189,7 +189,7 @@ export const refreshTokenHandler = async (req, res) => {
       token,
     });
   } catch (error) {
-    console.error(error);
+    console.log(error);
     return res.status(500).json({
       success: false,
       error: "An error occurred while processing your request.",
@@ -231,7 +231,7 @@ export const sendPasswordResetEmail = async (req, res) => {
 
     return res.status(200).json({ message: "Password reset email sent." });
   } catch (error) {
-    console.error(error);
+    console.log(error);
     return res
       .status(500)
       .json({ message: "An error occurred.", error: error.message });
@@ -258,7 +258,7 @@ export const resetPassword = async (req, res) => {
 
     return res.status(200).json({ message: "Password reset successfully." });
   } catch (error) {
-    console.error(error);
+    console.log(error);
     return res
       .status(500)
       .json({ message: "An error occurred.", error: error.message });
@@ -286,7 +286,7 @@ export const verifySigUpUser = async (req, res, next) => {
       `${getEnv("FRONTEND_URL")}/admin/signin?status=verified`
     );
   } catch (error) {
-    console.error(error);
+    console.log(error);
     return res
       .status(500)
       .json({ message: "An error occurred.", error: error.message });

@@ -13,6 +13,7 @@ const categorySchema = new mongoose.Schema({
     type: String,
     trim: true,
   },
+  photo: [String],
   createdAt: {
     type: Date,
     default: Date.now,

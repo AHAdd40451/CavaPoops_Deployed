@@ -18,7 +18,7 @@ categoryRoutes.post("/category", checkAuth, createCategory);
 categoryRoutes.get("/category/:id", checkAuth, getCategoryById);
 
 // Get all category
-categoryRoutes.get("/categories", checkAuth, getAllCategories);
+categoryRoutes.get("/categories", getAllCategories);
 
 // Update a category
 categoryRoutes.put("/category/:id", checkAuth, updateCategory);

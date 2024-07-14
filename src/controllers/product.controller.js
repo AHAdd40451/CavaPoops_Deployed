@@ -54,9 +54,41 @@ export const getProductById = async (req, res) => {
   }
 };
 
+export const getAllProductsByCategory = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const products = await Product.find({ category: id })
+      .populate({
+        path: "createdBy",
+        model: User,
+        select: "name",
+      })
+      .populate({
+        path: "category",
+        model: Category,
+        select: "name",
+      });
+
+    if (!products) {
+      return res.status(404).json({ error: "products not found." });
+    }
+
+    return res.json(products);
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ error: "An error occurred while retrieving the products." });
+  }
+};
+
 export const getAllProducts = async (req, res) => {
   try {
-    const products = await Product.find();
+    const products = await Product.find().populate({
+      path: "category",
+      model: Category,
+      select: "name",
+    });
     return res.json(products);
   } catch (error) {
     return res.status(500).json({
@@ -69,26 +101,17 @@ export const updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
     const { category } = req.body;
-    const userId = await getAuthUserId(req);
-    const resultUser = await User.findById(userId);
 
     const product = await Product.findById(id);
 
     if (!product) {
-      return res.status(404).json({ error: "Product not found." });
+      return res.status(404).json({ error: "Puppies not found." });
     }
 
-    if (resultUser.role !== "admin") {
-      return res
-        .status(403)
-        .json({ error: "You are not authorized to update this product." });
-    }
-
-    // Check if category exists
     if (category) {
       const categoryExists = await Category.findById(category);
       if (!categoryExists) {
-        return res.status(400).json({ error: "Invalid category." });
+        return res.status(400).json({ error: "Invalid Breed." });
       }
     }
 
@@ -108,21 +131,11 @@ export const updateProduct = async (req, res) => {
 export const deleteProduct = async (req, res) => {
   try {
     const { id } = req.params;
-    const userId = await getAuthUserId(req);
-    const product = await Product.findById(id);
-    const resultUser = await User.findById(userId);
+    const product = await Product.findByIdAndDelete(id);
 
     if (!product) {
       return res.status(404).json({ error: "Product not found." });
     }
-
-    if (resultUser.role !== "admin") {
-      return res
-        .status(403)
-        .json({ error: "You are not authorized to delete this product." });
-    }
-
-    await Product.findByIdAndDelete(id);
 
     return res.json({ message: "Product deleted successfully." });
   } catch (error) {

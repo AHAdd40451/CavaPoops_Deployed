@@ -4,5 +4,3 @@ yarn.lock
 package-lock.json
 /logs/uncaughtException.log
 .env
-prod.env
-.vercel

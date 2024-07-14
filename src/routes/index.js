@@ -1,6 +1,7 @@
 import error from "../middlewares/error.js";
 import authRoutes from "./auth.routes.js";
 import categoryRoutes from "./category.routes.js";
+import generalRoutes from "./general.routes.js";
 import productRoutes from "./product.routes.js";
 
 const routes = (app) => {
@@ -13,6 +14,8 @@ const routes = (app) => {
   //Category
   app.use("/api", categoryRoutes);
 
+  //General
+  app.use("/api", generalRoutes);
 
   // Error
   app.use(error);
