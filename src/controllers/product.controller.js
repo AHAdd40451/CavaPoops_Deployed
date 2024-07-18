@@ -145,3 +145,37 @@ export const deleteProduct = async (req, res) => {
     });
   }
 };
+
+export const createMultipleProducts = async (req, res) => {
+  try {
+    const products = req.body.products;
+
+    if (!Array.isArray(products) || products.length === 0) {
+      return res.status(400).json({ error: "No products provided." });
+    }
+
+    const savedProducts = [];
+    for (const productData of products) {
+      const { category } = productData;
+
+      const categoryExists = await Category.findById(category);
+      if (!categoryExists) {
+        return res.status(400).json({ error: `Invalid category for product: ${productData.name || 'Unnamed'}.` });
+      }
+
+      const product = new Product(productData);
+      await product.save();
+      savedProducts.push(product);
+    }
+
+    return res.status(201).json({
+      message: "Products created successfully",
+      products: savedProducts,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      error: "An error occurred while creating the products.",
+    });
+  }
+};
+

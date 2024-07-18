@@ -20,6 +20,15 @@ const productSchema = new mongoose.Schema(
       ref: "Category",
       required: true,
     },
+    gender: { type: String },
+    registry: { type: String },
+    vacations: { type: String },
+    vetInspection: { type: String },
+    birthDate: { type: String },
+    healthRecords: {
+      specialNurturingNotice: { type: String },
+      note: { type: String },
+    },
     createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   },
   {

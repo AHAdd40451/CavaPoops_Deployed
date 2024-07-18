@@ -6,6 +6,7 @@ import {
   updateProduct,
   deleteProduct,
   getAllProductsByCategory,
+  createMultipleProducts,
   // createMultipleProducts,
 } from "../controllers/product.controller.js";
 import checkAuth from "../middlewares/jwt.js";
@@ -14,6 +15,9 @@ const productRoutes = express.Router();
 
 // Create a product
 productRoutes.post("/product", createProduct);
+
+// Create a  multiple product
+productRoutes.post("/product/multiple", createMultipleProducts);
 
 // Get a product by ID
 productRoutes.get("/product/:id", checkAuth, getProductById);
