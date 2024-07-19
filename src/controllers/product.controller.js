@@ -1,5 +1,6 @@
 import { Product } from "../models/product.model.js";
 import { Category } from "../models/category.model.js";
+import { Breed } from "../models/breed.model.js";
 import { User } from "../models/user.model.js";
 import getAuthUserId from "../middlewares/authUserId.js";
 import { ObjectId } from "mongodb";
@@ -8,7 +9,7 @@ export const createProduct = async (req, res) => {
   try {
     const { category } = req.body;
 
-    const categoryExists = await Category.findById(category);
+    const categoryExists = await Breed.findById(category);
     if (!categoryExists) {
       return res.status(400).json({ error: "Invalid category." });
     }
@@ -38,7 +39,7 @@ export const getProductById = async (req, res) => {
       })
       .populate({
         path: "category",
-        model: Category,
+        model: Breed,
         select: "name",
       });
 
@@ -66,7 +67,7 @@ export const getAllProductsByCategory = async (req, res) => {
       })
       .populate({
         path: "category",
-        model: Category,
+        model: Breed,
         select: "name",
       });
 
@@ -86,7 +87,7 @@ export const getAllProducts = async (req, res) => {
   try {
     const products = await Product.find().populate({
       path: "category",
-      model: Category,
+      model: Breed,
       select: "name",
     });
     return res.json(products);
@@ -109,7 +110,7 @@ export const updateProduct = async (req, res) => {
     }
 
     if (category) {
-      const categoryExists = await Category.findById(category);
+      const categoryExists = await Breed.findById(category);
       if (!categoryExists) {
         return res.status(400).json({ error: "Invalid Breed." });
       }
@@ -158,7 +159,7 @@ export const createMultipleProducts = async (req, res) => {
     for (const productData of products) {
       const { category } = productData;
 
-      const categoryExists = await Category.findById(category);
+      const categoryExists = await Breed.findById(category);
       if (!categoryExists) {
         return res.status(400).json({ error: `Invalid category for product: ${productData.name || 'Unnamed'}.` });
       }

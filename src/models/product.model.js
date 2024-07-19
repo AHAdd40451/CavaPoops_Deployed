@@ -17,7 +17,7 @@ const productSchema = new mongoose.Schema(
     inStock: { type: Number },
     category: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Category",
+      ref: "Breed",
       required: true,
     },
     gender: { type: String },
