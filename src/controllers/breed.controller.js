@@ -1,4 +1,5 @@
 import { Breed } from "../models/breed.model.js";
+import { Category } from "../models/category.model.js";
 // Create a new breed
 export const createBreed = async (req, res) => {
   try {
@@ -37,7 +38,11 @@ export const getBreedById = async (req, res) => {
 // Get all breeds
 export const getAllBreeds = async (req, res) => {
   try {
-    const breeds = await Breed.find();
+    const breeds = await Breed.find().populate({
+      path: "breedInformation.category",
+      model: Category,
+      select: "name",
+    });
     return res.json(breeds);
   } catch (error) {
     return res.status(500).json({

@@ -3,6 +3,7 @@ import authRoutes from "./auth.routes.js";
 import breedRoutes from "./breed.routes.js";
 import categoryRoutes from "./category.routes.js";
 import generalRoutes from "./general.routes.js";
+import orderRoutes from "./order.routes.js";
 import productRoutes from "./product.routes.js";
 import puppyRoutes from "./puppy.routes.js";
 
@@ -24,6 +25,9 @@ const routes = (app) => {
 
   //Puppy
   app.use("/api", puppyRoutes);
+
+  //order
+  app.use("/api", orderRoutes);
 
   // Error
   app.use(error);

@@ -3,7 +3,8 @@ import mongoose from "mongoose";
 const puppySchema = new mongoose.Schema({
   puppyInformation: {
     breed: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Breed",
       required: true,
     },
     breeder: {
@@ -30,12 +31,10 @@ const puppySchema = new mongoose.Schema({
     },
     gender: {
       type: String,
-      enum: ["Male", "Female"],
       required: true,
     },
     registration: {
       type: String,
-      enum: ["ACA", "AKC", "CKC", "ICA", "n/a"],
     },
     akcAppNumber: {
       type: String,
@@ -52,12 +51,14 @@ const puppySchema = new mongoose.Schema({
     weight: {
       type: Number,
     },
-    testResults: {
-      type: [String],
-    },
-    meds: {
-      type: [String],
-    },
+    testResults1: { type: String, default: null },
+    meds1: { type: String, default: null },
+    testResults2: { type: String, default: null },
+    meds2: { type: String, default: null },
+    testResults3: { type: String, default: null },
+    meds3: { type: String, default: null },
+    testResults4: { type: String, default: null },
+    meds4: { type: String, default: null },
     dateSold: {
       type: Date,
     },
@@ -128,9 +129,7 @@ const puppySchema = new mongoose.Schema({
     photos: {
       type: [String],
     },
-    registrationPaperwork: {
-      type: [String],
-    },
+
     presalePups: {
       type: [String],
     },

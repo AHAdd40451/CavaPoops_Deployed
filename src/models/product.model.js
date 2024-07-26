@@ -1,39 +1,27 @@
 import mongoose from "mongoose";
 
-const productSchema = new mongoose.Schema(
+const ProductSchema = new mongoose.Schema(
   {
-    name: { type: String },
+    media: { type: [String] },
+    title: { type: String },
     description: { type: String },
-    photo: [String],
-    price: { type: String },
-    discountedPrice: { type: String },
-    unit: {
-      type: String,
-      default: "$",
-    },
-    ageOfPuppies: { type: String },
-    weightLbs: { type: Number },
-    weightOunce: { type: Number },
-    inStock: { type: Number },
-    category: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Breed",
-      required: true,
-    },
-    gender: { type: String },
-    registry: { type: String },
-    vacations: { type: String },
-    vetInspection: { type: String },
-    birthDate: { type: String },
-    healthRecords: {
-      specialNurturingNotice: { type: String },
-      note: { type: String },
-    },
-    createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    id: { type: String },
+    name: { type: String },
+    price: { type: Number },
+    wholesaleCost: { type: Number },
+    storeSold: { type: Number, default: 0 },
+    nkSold: { type: Number, default: 0 },
+    inventoryCost: { type: Number, default: 0 },
+    displayOrder: { type: Number },
+    active: { type: Boolean, default: true },
+    required: { type: Boolean, default: false },
+    preSelected: { type: Boolean, default: false },
+    noSalesTax: { type: Boolean, default: false },
+    notes: { type: String },
   },
   {
     timestamps: true,
   }
 );
 
-export const Product = mongoose.model("Product", productSchema);
+export const Product = mongoose.model("Product", ProductSchema);

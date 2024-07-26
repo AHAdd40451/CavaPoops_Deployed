@@ -1,3 +1,4 @@
+import { Breed } from "../models/breed.model.js";
 import { Puppy } from "../models/puppy.model.js";
 
 // Create a new pup
@@ -5,7 +6,9 @@ export const createPuppy = async (req, res) => {
   try {
     const puppy = new Puppy(req.body);
     await puppy.save();
-    return res.status(201).json({ message: "Puppy created successfully", puppy });
+    return res
+      .status(201)
+      .json({ message: "Puppy created successfully", puppy });
   } catch (error) {
     return res.status(500).json({
       error: "An error occurred while creating the puppy.",
@@ -36,7 +39,11 @@ export const getPuppyById = async (req, res) => {
 // Get all pups
 export const getAllPuppies = async (req, res) => {
   try {
-    const puppies = await Puppy.find();
+    const puppies = await Puppy.find().populate({
+      path: "puppyInformation.breed",
+      model: Breed,
+      select: "breedInformation.breedName",
+    });
     return res.json(puppies);
   } catch (error) {
     return res.status(500).json({

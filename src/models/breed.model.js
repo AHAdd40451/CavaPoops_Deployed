@@ -3,7 +3,11 @@ import mongoose from "mongoose";
 // Schema for breed information
 const breedInformationSchema = new mongoose.Schema({
   breedName: { type: String, required: true, trim: true },
-  category: { type: String, trim: true },
+  category: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Category",
+    required: true,
+  },
   petPlanBreedId: { type: String, trim: true },
   alternateNames: [String],
   safeAlternateNames: [String],
