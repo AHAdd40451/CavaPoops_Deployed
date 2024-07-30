@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 const orderSchema = new mongoose.Schema(
   {
+    puppies: [{ type: mongoose.Schema.Types.ObjectId, ref: "Puppy" }],
     zipcode: { type: String },
     deliveryMethod: {
       type: String,
@@ -9,6 +10,7 @@ const orderSchema = new mongoose.Schema(
     pickupPoint: { type: String },
     orderStatus: { type: String, default: "pending" },
     deliveryCharges: { type: String },
+
     products: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
     orderSummary: {
       deliveryMethodCharge: { type: Number },
