@@ -4,13 +4,11 @@ const orderSchema = new mongoose.Schema(
   {
     puppies: [{ type: mongoose.Schema.Types.ObjectId, ref: "Puppy" }],
     zipcode: { type: String },
-    deliveryMethod: {
-      type: String,
-    },
+    deliveryMethod: { type: String },
     pickupPoint: { type: String },
+    orderId: { type: Number },
     orderStatus: { type: String, default: "pending" },
     deliveryCharges: { type: String },
-
     products: [{ type: mongoose.Schema.Types.ObjectId, ref: "Product" }],
     orderSummary: {
       deliveryMethodCharge: { type: Number },
@@ -44,14 +42,34 @@ const orderSchema = new mongoose.Schema(
       zip: { type: String },
     },
     paymentOptions: {
-      method: {
-        type: String,
-      },
+      payType: { type: String },
+      method: { type: String },
     },
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true }
 );
+
+// Middleware to generate sequential orderId without a counter schema
+orderSchema.pre("save", async function (next) {
+  const order = this;
+  if (order.isNew) {
+    try {
+      const lastOrder = await mongoose
+        .model("Order")
+        .findOneAndUpdate(
+          {},
+          { $inc: { orderId: 1 } },
+          { sort: { orderId: -1 }, new: true }
+        );
+
+      order.orderId = lastOrder ? lastOrder.orderId : 1;
+      next();
+    } catch (error) {
+      next(error);
+    }
+  } else {
+    next();
+  }
+});
 
 export const Order = mongoose.model("Order", orderSchema);
